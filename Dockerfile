@@ -19,8 +19,6 @@ RUN apt-get update && apt-get install -y \
     file gdb vim git python3-pip \
     && rm -rf /var/lib/apt/lists/*
 
-RUN git clone https://github.com/qlbdsc/codisasm.git /app
-
 # 设置工作目录
 WORKDIR /usr/src
 
@@ -45,7 +43,8 @@ RUN bash -c "$(wget https://gef.blah.cat/sh -O -)"
 ENV LC_CTYPE=C.UTF-8
 
 # Build debug and release version respectively.
-RUN cd /app && git pull && mkdir debug && cd debug && \
+COPY . /app
+RUN cd /app && mkdir debug && cd debug && \
     cmake -DCMAKE_BUILD_TYPE=Debug .. && make
 RUN cd /app && mkdir release && cd release && \
     cmake -DCMAKE_BUILD_TYPE=Release .. && make
