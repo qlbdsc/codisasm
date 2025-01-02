@@ -47,7 +47,6 @@ void cod_dec_init(decoder_t *decoder) {
     
     decoder->stack_addr_width = XED_ADDRESS_WIDTH_64b;
     decoder->mmode = XED_MACHINE_MODE_LONG_64;
-    cout << "aaaaaaaaaa"<< decoder->stack_addr_width << decoder->mmode <<endl;
 }
 
 inst_cat_e cod_dec_decode(decoder_t *decoder, program_dump_t *prg, instruction_t* inst, add_t* target) {

@@ -165,8 +165,7 @@ bool cod_trace_get_instr(trace_t *trace, Cfg *cfg, instruction_t* previous, inst
                 trace->file.read(saddr, 4);
                 add_t addr = bin2uint32(saddr);
                 size_t size = trace->file.get();
-                cout << "Address (hex): 0x" << std::hex << addr << std::dec << endl;
-
+                
                 Address_Wave test = {addr, trace->wave};
                 map < Address_Wave, instruction_t*>::iterator dup;
                 if((dup = cfg->map_inst.find(test)) != cfg->map_inst.end()) {
@@ -211,4 +210,3 @@ bool cod_trace_get_instr(trace_t *trace, Cfg *cfg, instruction_t* previous, inst
     }
     return false;
 }
-
