@@ -45,7 +45,7 @@ RUN bash -c "$(wget https://gef.blah.cat/sh -O -)"
 ENV LC_CTYPE=C.UTF-8
 
 # Build debug and release version respectively.
-RUN cd /app && mkdir debug && cd debug && \
+RUN cd /app && git pull && mkdir debug && cd debug && \
     cmake -DCMAKE_BUILD_TYPE=Debug .. && make
 RUN cd /app && mkdir release && cd release && \
     cmake -DCMAKE_BUILD_TYPE=Release .. && make

@@ -59,18 +59,21 @@ def tracing_cb(ql: Qiling, address: int, size: int, tracer: Tracer) -> None:
 	tracer.add_inst(rel_addr, ql.mem.read(address, size))
 	tracer.last_addr = rel_addr
 
-if __name__ == "__main__":
-	args = argparse.ArgumentParser()
-	args.add_argument("binary", type=str, help="The binary to be traced.")
-	args.add_argument("output", type=str,
-		help="The path to store tracing output.")
-	args = args.parse_args()
-	ql = Qiling([args.binary], "/")
+def trace(binary: str, output: str) -> None:
+	ql = Qiling([binary], "/")
 	tracer = Tracer(*get_executable_range(ql, os.path.basename(ql.path)))
 	ql.hook_code(tracing_cb, user_data=tracer)
 	try:
 		ql.run()
 	except UcError as e:
 		ql.log.warning(f"UcError: {e}")
-	with open(args.output, 'wb') as fd:
+	with open(output, 'wb') as fd:
 		fd.write(tracer._content)
+
+if __name__ == "__main__":
+	args = argparse.ArgumentParser()
+	args.add_argument("binary", type=str, help="The binary to be traced.")
+	args.add_argument("output", type=str,
+		help="The path to store tracing output.")
+	args = args.parse_args()
+	trace(args.binary, args.output)
