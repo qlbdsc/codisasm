@@ -1,0 +1,2 @@
+/usr/local/llvm-3.5/bin/llvm-ar qc libinput_code.a CMakeFiles/libinput_code.dir/3rdparty/libinput_code/src/input_elf_extract.c.o CMakeFiles/libinput_code.dir/3rdparty/libinput_code/src/input_extract.c.o CMakeFiles/libinput_code.dir/3rdparty/libinput_code/src/input_pe32_extract.c.o CMakeFiles/libinput_code.dir/3rdparty/libinput_code/src/input_raw_extract.c.o CMakeFiles/libinput_code.dir/3rdparty/libinput_code/src/program_dump.c.o
+/usr/bin/ranlib libinput_code.a
