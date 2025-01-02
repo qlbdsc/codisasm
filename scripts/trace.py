@@ -1,4 +1,5 @@
 from qiling import Qiling
+from qiling.extensions import pipe
 from typing import Optional, Tuple
 from unicorn import UcError
 import argparse
@@ -61,10 +62,12 @@ def tracing_cb(ql: Qiling, address: int, size: int, tracer: Tracer) -> None:
 
 def trace(binary: str, output: str) -> None:
 	ql = Qiling([binary], "/")
+	ql.os.stdin = pipe.SimpleInStream(0)
+	ql.os.stdin.write(b'')
 	tracer = Tracer(*get_executable_range(ql, os.path.basename(ql.path)))
 	ql.hook_code(tracing_cb, user_data=tracer)
 	try:
-		ql.run()
+		ql.run(None, None, 10 * 60 * 1000000) # 10min timeout.
 	except UcError as e:
 		ql.log.warning(f"UcError: {e}")
 	with open(output, 'wb') as fd:
