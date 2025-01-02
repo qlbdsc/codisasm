@@ -24,6 +24,6 @@ if __name__ == "__main__":
 				break
 			r = re.match(pattern, line)
 			if r is not None:
-				results.append(r.group(1))
+				results.append(r.group(1) + '\n')
 	with open("/output/results.txt", "w") as fd:
 		fd.writelines(results)
