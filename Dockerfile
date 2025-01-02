@@ -42,15 +42,16 @@ ENV PATH="/usr/local/llvm-3.5/bin:$PATH"
 RUN bash -c "$(wget https://gef.blah.cat/sh -O -)"
 ENV LC_CTYPE=C.UTF-8
 
+# Install emulator for tracing.
+RUN python3 -m pip install --upgrade pip && \
+    python3 -m pip install --upgrade qiling==1.4.5
+
 # Build debug and release version respectively.
 COPY . /app
 RUN cd /app && mkdir debug && cd debug && \
     cmake -DCMAKE_BUILD_TYPE=Debug .. && make
 RUN cd /app && mkdir release && cd release && \
     cmake -DCMAKE_BUILD_TYPE=Release .. && make
-
-RUN python3 -m pip install --upgrade pip && \
-    python3 -m pip install --upgrade qiling==1.4.5
 
 # 默认命令
 WORKDIR /app
