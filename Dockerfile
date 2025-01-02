@@ -1,8 +1,6 @@
 # 基础镜像选择Ubuntu
 FROM ubuntu:22.04
 
-COPY . /app
-WORKDIR /app
 # 设置环境变量，避免在构建过程中提示交互
 ENV DEBIAN_FRONTEND=noninteractive
 
@@ -20,6 +18,8 @@ RUN apt-get update && apt-get install -y \
     libssl-dev \
     file gdb vim git python3-pip \
     && rm -rf /var/lib/apt/lists/*
+
+RUN git clone https://github.com/qlbdsc/codisasm.git /app
 
 # 设置工作目录
 WORKDIR /usr/src
@@ -51,8 +51,7 @@ RUN cd /app && mkdir release && cd release && \
     cmake -DCMAKE_BUILD_TYPE=Release .. && make
 
 RUN python3 -m pip install --upgrade pip && \
-	python3 -m pip install --upgrade qiling==1.4.5
-COPY trace.py /apptrace.py
+    python3 -m pip install --upgrade qiling==1.4.5
 
 # 默认命令
 WORKDIR /app
