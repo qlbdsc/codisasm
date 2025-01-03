@@ -53,6 +53,14 @@ RUN cd /app && mkdir debug && cd debug && \
 RUN cd /app && mkdir release && cd release && \
     cmake -DCMAKE_BUILD_TYPE=Release .. && make
 
+# Download and build Intel Pin for tracing.
+RUN mkdir /app/pin && cd /app/pin && \
+    wget "https://software.intel.com/sites/landingpage/pintool/downloads/pin-external-3.31-98869-gfa6f126a8-gcc-linux.tar.gz" && \
+    tar --strip-components=1 -xvzf "pin-external-3.31-98869-gfa6f126a8-gcc-linux.tar.gz" && \
+    cp -r "/app/tracer" "./source/tools/CoDisasm" && \
+    cd "./source/tools/CoDisasm" && \
+    make
+
 # 默认命令
 WORKDIR /app
 CMD ["bash"]
