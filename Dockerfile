@@ -51,7 +51,10 @@ COPY . /app
 RUN cd /app && mkdir debug && cd debug && \
     cmake -DCMAKE_BUILD_TYPE=Debug .. && make
 RUN cd /app && mkdir release && cd release && \
-    cmake -DCMAKE_BUILD_TYPE=Release .. && make
+    cmake .. && make
+# `-DCMAKE_BUILD_TYPE=Release` should not be used because this shitty program
+# contains side-effect operations in `assert`, and using `Release` will set
+# `NDEBUG` macro, making all operations inside `assert` to be removed.
 
 # Download and build Intel Pin for tracing.
 RUN mkdir /app/pin && cd /app/pin && \
