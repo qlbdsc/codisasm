@@ -6,7 +6,7 @@ import os
 def trace_pin(bin_path: str, tr_path: str) -> None:
 	try:
 		subprocess.run(["../../../pin", "-t", "obj-intel64/codisasm.so",
-			"-o", tr_path, "--", bin_path], check=True,
+			"-o", tr_path, "--", bin_path],
 			cwd="/app/pin/source/tools/CoDisasm", input=b'', timeout=60 * 10)
 	except subprocess.TimeoutExpired:
 		pass
